@@ -45,6 +45,12 @@ class Product(models.Model):
         elif self.name.lower() == 'Leite A2 Fermentado':
             self.expiration_date = self.production_date + timedelta(days=30)
         elif self.name.lower() == [
+            'Bebida Láctea de Ameixa',
+            'Bebida Láctea de Morango',
+            'Bebida Láctea de Graviola'
+        ]:
+            self.expiration_date = self.production_date + timedelta(days=60)
+        elif self.name.lower() == [
             'Coalhada Tradicional',
             'Coalhada Light',
             'Coalhada Natural A2',
@@ -53,10 +59,7 @@ class Product(models.Model):
             'Coalhadade Morango',
             'Iogurte Desnatado',
             'Iogurte Integral',
-            'Iogurte de Morango',
-            'Bebida Láctea de Ameixa',
-            'Bebida Láctea de Morango',
-            'Bebida Láctea de Graviola'
+            'Iogurte de Morango'
         ]:
             self.expiration_date = self.production_date + timedelta(days=90)
         elif self.nome.lower() == [
