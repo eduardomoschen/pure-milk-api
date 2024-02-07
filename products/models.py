@@ -29,7 +29,7 @@ class Product(models.Model):
             ean.write(image_bytes_io)
             image_bytes_io.seek(0)
 
-            barcode_path = os.path.join(f'{self.name}.png')
+            barcode_path = os.path.join(f'{self.name.lower()}.png')
 
             image_content = ContentFile(
                 image_bytes_io.read(),
@@ -40,17 +40,21 @@ class Product(models.Model):
             self.barcode_image.save(barcode_path, image_content)
 
     def set_expiration_date(self):
-        if self.name.lower() == ['Leite A2', 'Leite A2 Zero Lactose']:
+        product_name = self.name
+
+        print(f"Product Name: {product_name}")
+
+        if self.name in ['Leite A2', 'Leite A2 Zero Lactose']:
             self.expiration_date = self.production_date + timedelta(days=14)
-        elif self.name.lower() == 'Leite A2 Fermentado':
+        elif self.name == 'Leite A2 Fermentado':
             self.expiration_date = self.production_date + timedelta(days=30)
-        elif self.name.lower() == [
+        elif self.name in [
             'Bebida Láctea de Ameixa',
             'Bebida Láctea de Morango',
             'Bebida Láctea de Graviola'
         ]:
             self.expiration_date = self.production_date + timedelta(days=60)
-        elif self.name.lower() == [
+        elif self.name in [
             'Coalhada Tradicional',
             'Coalhada Light',
             'Coalhada Natural A2',
@@ -62,7 +66,7 @@ class Product(models.Model):
             'Iogurte de Morango'
         ]:
             self.expiration_date = self.production_date + timedelta(days=90)
-        elif self.nome.lower() == [
+        elif self.name in [
             'Requeijão Cremoso Tradicional',
             'Requeijão Cremoso Light',
             'Requeijão Cremoso Zero Lactose'
@@ -70,8 +74,8 @@ class Product(models.Model):
             self.expiration_date = self.production_date + timedelta(days=120)
 
     def save(self, *args, **kwargs):
-        self.generate_barcode()
         self.set_expiration_date()
+        self.generate_barcode()
         super().save(*args, **kwargs)
 
     def __str__(self):
