@@ -3,6 +3,7 @@ from products.models import Product
 from sellers.models import Seller
 from supermarkets.models import Supermarket
 
+
 class Order(models.Model):
     seller = models.ForeignKey(Seller, on_delete=models.PROTECT)
     supermarket = models.ForeignKey(Supermarket, on_delete=models.PROTECT)
