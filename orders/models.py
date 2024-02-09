@@ -5,10 +5,15 @@ from supermarkets.models import Supermarket
 
 
 class Order(models.Model):
-    seller = models.ForeignKey(Seller, on_delete=models.PROTECT)
+    seller = models.ForeignKey(Seller, on_delete=models.PROTECT, related_name='orders')
     supermarket = models.ForeignKey(Supermarket, on_delete=models.PROTECT)
     date_of_order = models.DateField(auto_now_add=True)
-    invoicing = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
+    invoicing = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return f'{self.id} - {self.seller} - {self.supermarket}: {self.date_of_order}'
